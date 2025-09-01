@@ -1,6 +1,6 @@
 Realizar un juego similar al "Space Invaders"
-REQUISITOS 
-MÍNIMOS:
+
+REQUISITOS  MÍNIMOS:
 
 1, Movimiento horizontal del jugador
 2 Movimiento de los invasores (horizontal y vertical)
