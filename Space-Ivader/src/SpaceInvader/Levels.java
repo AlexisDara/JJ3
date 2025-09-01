@@ -14,6 +14,7 @@ public class Levels {
     private int desplazamientoX;
     private int desplazamientoY;
     private int startX, startY, sepX, sepY;
+	public int sumarPuntos;
 
     public Levels(int screenWidth, int screenHeight) {
         this.nivel = 1;

@@ -15,27 +15,24 @@ public class PanelInicio extends JPanel {
 
     public PanelInicio() {
         this.fondoGif = new ImageIcon(getClass().getResource("/images/menu.png")).getImage();
-        this.botonEmpezar = new JButton("Empezar");
         this.iniciado = false;
         setLayout(null);
-        botonEmpezar.setBounds(Main.SCREEN_WIDTH/2 - 75, Main.SCREEN_HEIGHT/2, 150, 50);
-        add(botonEmpezar);
-        botonEmpezar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                iniciado = true;
-            }
-        });
     }
+  
+      
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         // Ajusta el fondo y los textos a la resolución actual
         g.drawImage(fondoGif, 0, 0, Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT, null);
-        g.setColor(Color.WHITE);
+        g.setColor(Color.RED);
+        g.setFont(new Font("Arial", Font.BOLD, 50));
+        g.drawString("Zombie Invaders", Main.SCREEN_WIDTH/2 - 200, Main.SCREEN_HEIGHT/4 + 100);
         g.setFont(new Font("Arial", Font.BOLD, 18));
-        g.drawString("Controles: A/D para mover, Espacio para disparar", Main.SCREEN_WIDTH/2 - 200, Main.SCREEN_HEIGHT/4);
-        g.drawString("Presione A, D o Espacio para empezar", Main.SCREEN_WIDTH/2 - 180, Main.SCREEN_HEIGHT/4 + 40);
+        g.setColor(Color.WHITE);
+        g.drawString("Controles: A/D para mover, Espacio para disparar", Main.SCREEN_WIDTH/2 - 200, Main.SCREEN_HEIGHT/4 + 450);
+        g.drawString("Presione A, D o Espacio para empezar", Main.SCREEN_WIDTH/2 - 180, Main.SCREEN_HEIGHT/4 + 500);
     }
     @Override
     public Dimension getPreferredSize() {

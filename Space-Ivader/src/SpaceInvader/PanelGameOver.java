@@ -32,14 +32,14 @@ public class PanelGameOver extends JPanel {
         g.fillRect(0, 0, Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT);
         g.setColor(Color.RED);
         g.setFont(new Font("Arial", Font.BOLD, 50));
-        g.drawString("GAME OVER", Main.SCREEN_WIDTH/2 - 180, Main.SCREEN_HEIGHT/2 - 50);
+        g.drawString("GAME OVER", Main.SCREEN_WIDTH/2 - 160 , Main.SCREEN_HEIGHT/2 - 50);
         g.setFont(new Font("Arial", Font.BOLD, 30));
         g.setColor(Color.WHITE);
         g.drawString("Puntos: " + puntos, Main.SCREEN_WIDTH/2 - 80, Main.SCREEN_HEIGHT/2 + 40);
         // Texto para reiniciar
         g.setFont(new Font("Arial", Font.BOLD, 24));
         g.setColor(Color.YELLOW);
-        g.drawString("Toca R para reiniciar", Main.SCREEN_WIDTH/2 - 120, Main.SCREEN_HEIGHT/2 + 100);
+        g.drawString("Toca R para reiniciar", Main.SCREEN_WIDTH/2 - 130, Main.SCREEN_HEIGHT/2 + 100);
     }
     @Override
     public Dimension getPreferredSize() {

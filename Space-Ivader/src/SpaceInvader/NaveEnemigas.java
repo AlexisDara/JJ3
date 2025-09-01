@@ -123,16 +123,20 @@ public class NaveEnemigas {
 
     // Dibuja la nave enemiga
     public void dibujar(Graphics g) {
+        int drawAncho = (int)(Main.SCREEN_WIDTH * 0.07); // 7% del ancho de pantalla
+        int drawAlto = (int)(Main.SCREEN_HEIGHT * 0.11); // 11% del alto de pantalla
         if (imagenCargada) {
-            g.drawImage(imagen, x, y, 40, 40, null); // Dibuja la imagen a 40x40 px
+            g.drawImage(imagen, x, y, drawAncho, drawAlto, null); // Dibuja la imagen de forma responsive
         } else {
             // Si no carga la imagen, dibuja un cuadrado del color según el tipo
             if (tipo == 1) g.setColor(Color.ORANGE);
             else if (tipo == 2) g.setColor(Color.YELLOW);
             else if (tipo == 3) g.setColor(Color.MAGENTA);
             else g.setColor(Color.RED);
-            g.fillRect(x, y, 40, 40);
+            g.fillRect(x, y, drawAncho, drawAlto);
         }
+        this.ancho = drawAncho;
+        this.alto = drawAlto;
     }
 
     // Métodos para comportamientos especiales

@@ -165,7 +165,7 @@ public class FuncionesNaves {
     }
 
     // Colisiones
-    public static void colisiones(NaveEnemigas[][] formacion, List<Proyectil> proyectilesJugador, List<Proyectil> proyectilesEnemigos, NavePrincipal nave, Levels levels, JuegoPanel panel) {
+    public static void colisiones(NaveEnemigas[][] formacion, List<Proyectil> proyectilesJugador, List<Proyectil> proyectilesEnemigos, NavePrincipal nave, Levels levels, JuegoPanel panel, Hud hud) {
         // Proyectil jugador vs enemigos
         for (int i = 0; i < proyectilesJugador.size(); i++) {
             Proyectil pj = proyectilesJugador.get(i);
@@ -183,12 +183,15 @@ public class FuncionesNaves {
                                 formacion[fila][col] = null;
                                 hit = true;
                                 levels.sumarPuntos(200);
+                                hud.sumarPuntos(200);
                                 break outer;
                             }
                         } else {
                             formacion[fila][col] = null;
                             hit = true;
-                            levels.sumarPuntos(enemigo.getTipo() == 3 ? 300 : 100);
+                            int puntos = (enemigo.getTipo() == 3 ? 300 : 100);
+                            levels.sumarPuntos(puntos);
+                            hud.sumarPuntos(puntos);
                             break outer;
                         }
                     }

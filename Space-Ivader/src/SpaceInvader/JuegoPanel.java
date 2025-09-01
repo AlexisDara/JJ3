@@ -95,7 +95,7 @@ public class JuegoPanel extends JPanel implements ActionListener, KeyListener {
         FuncionesNaves.disparoNaveAmarilla(formacion, proyectilesEnemigos);
         FuncionesNaves.comportamientoKamikaze(formacion, nave, levels, this);
         FuncionesNaves.moverProyectiles(proyectilesJugador, proyectilesEnemigos, BORDE_Y);
-        FuncionesNaves.colisiones(formacion, proyectilesJugador, proyectilesEnemigos, nave, levels, this);
+        FuncionesNaves.colisiones(formacion, proyectilesJugador, proyectilesEnemigos, nave, levels, this, hud);
         FuncionesNaves.chequearEstados(formacion, nave, levels, this);
         repaint();
     }
