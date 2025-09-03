@@ -11,14 +11,9 @@ public class NaveEnemigas {
     protected int x, y;
     protected double velocidad;
     protected Image imagen;
-    protected Image imagenDaniada; // Imagen alternativa para naves con 2 vidas
-    private String rutaImagen;
-    private String rutaImagenDaniada;
     protected int ancho, alto;
-    // Cambia el comentario para reflejar los tipos reales
-    protected int tipo; // 0: normal, 1: zombi1, 2: kamikaze, 3: jefe
+    protected int tipo; // 0: normal, 1: zombi1, 2: kamikaze, 3: jefe, 4: jefe
     private boolean imagenCargada;
-
     private boolean bajando = true;
     private int objetivoY = 0;
     private int direccionX = 1;
@@ -33,8 +28,6 @@ public class NaveEnemigas {
         this.y = y;
         this.tipo = tipo;
         this.velocidad = 3;
-        this.rutaImagen = rutaImagen;
-        this.rutaImagenDaniada = null;
         try {
             String ruta = getRutaImagenPorTipo(tipo);
             java.net.URL url = getClass().getResource(ruta);
@@ -50,48 +43,12 @@ public class NaveEnemigas {
         this.ancho = (imagenCargada) ? imagen.getWidth(null) : 140;
         this.alto = (imagenCargada) ? imagen.getHeight(null) : 140;
     }
-    
-    
-    // Nuevo constructor para naves con 2 imágenes (2 vidas)
-    public NaveEnemigas(int x, int y, int tipo, String rutaImagen, String rutaImagenDaniada) {
-        this.x = x;
-        this.y = y;
-        this.tipo = tipo;
-        this.velocidad = 3;
-        this.rutaImagen = rutaImagen;
-        this.rutaImagenDaniada = rutaImagenDaniada;
-        try {
-            String ruta = getRutaImagenPorTipo(tipo);
-            java.net.URL url = getClass().getResource(ruta);
-            if (url != null) {
-                this.imagen = new ImageIcon(url).getImage();
-            } else {
-                this.imagen = null;
-            }
-            if (rutaImagenDaniada != null) {
-                java.net.URL urlDaniada = getClass().getResource(rutaImagenDaniada);
-                if (urlDaniada != null) {
-                    this.imagenDaniada = new ImageIcon(urlDaniada).getImage();
-                }
-            }
-            this.imagenCargada = (this.imagen != null && this.imagen.getWidth(null) > 0);
-        } catch (Exception e) {
-            this.imagenCargada = false;
-        }
-        this.ancho = (imagenCargada) ? imagen.getWidth(null) : 40;
-        this.alto = (imagenCargada) ? imagen.getHeight(null) : 40;
-        this.bajando = true;
-        this.objetivoY = (int)(Main.SCREEN_HEIGHT * 0.5) + (int)(Math.random() * (Main.SCREEN_HEIGHT * 0.05));
-        this.direccionX = Math.random() < 0.5 ? -1 : 1;
-    }
 
     public NaveEnemigas(int x, int y, int tipo, String rutaImagen, double velocidad) {
         this.x = x;
         this.y = y;
         this.tipo = tipo;
         this.velocidad = velocidad;
-        this.rutaImagen = rutaImagen;
-        this.rutaImagenDaniada = null;
         try {
             String ruta = getRutaImagenPorTipo(tipo);
             java.net.URL url = getClass().getResource(ruta);
@@ -203,9 +160,8 @@ public class NaveEnemigas {
     }
     public void setVidas(int v) {
         this.vidas = v;
-        // Si tiene imagen dañada y le queda 1 vida, cambia la imagen
-        if (this.vidas == 1 && imagenDaniada != null) {
-            this.imagen = imagenDaniada;
+        if (this.vidas <= 0) {
+            AudioPlayer.playExplosion();
         }
     }
     public int getVidas() { return vidas; }

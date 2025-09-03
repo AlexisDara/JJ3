@@ -1,5 +1,7 @@
 package SpaceInvader;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.*;
 
 /**
@@ -26,6 +28,9 @@ public class Levels {
         this.sepY = (int)(screenHeight * 0.06);
         setConfigForLevel(nivel);
     }
+   
+        
+    
 
     public void siguienteNivel() {
         nivel++;
@@ -55,11 +60,23 @@ public class Levels {
     public int getSepX() { return sepX; }
     public int getSepY() { return sepY; }
 
+    public boolean esVictoria() {
+        return nivel > 10;
+    }
+
     /**
      * Configura la formación y parámetros de movimiento según el nivel.
      * Tipos de nave: 1=rojo (débil), 2=amarillo (2 vidas), 3=violeta (kamikaze)
      */
     private void setConfigForLevel(int nivel) {
+        if (nivel > 10) {
+            // No hay más niveles, mantener el último
+            formacionActual = new int[0][0];
+            pasosPorLado = 0;
+            desplazamientoX = 0;
+            desplazamientoY = 0;
+            return;
+        }
         switch (nivel) {
             case 1:
                 formacionActual = new int[][] {
@@ -79,7 +96,7 @@ public class Levels {
                 };
                 pasosPorLado = 20;
                 desplazamientoX = 4;
-                desplazamientoY = 13;
+                desplazamientoY = 20;
                 break;
             case 3:
                 formacionActual = new int[][] {
@@ -88,8 +105,8 @@ public class Levels {
                     {3, 0, 3, 0, 3, 0, 3, 0, 3, 0}
                 };
                 pasosPorLado = 20;
-                desplazamientoX = 1;
-                desplazamientoY = 14;
+                desplazamientoX = 10;
+                desplazamientoY = 24;
                 break;
             case 4:
                 formacionActual = new int[][] {
@@ -98,8 +115,8 @@ public class Levels {
                     {3, 3, 0, 0, 3, 3, 0, 0, 3, 3, 0}
                 };
                 pasosPorLado = 22;
-                desplazamientoX = 2;
-                desplazamientoY = 14;
+                desplazamientoX = 10;
+                desplazamientoY = 24;
                 break;
             case 5:
                 formacionActual = new int[][] {
@@ -108,8 +125,8 @@ public class Levels {
                     {3, 3, 3, 3, 3, 3, 3, 3, 3, 3}
                 };
                 pasosPorLado = 22;
-                desplazamientoX = 3;
-                desplazamientoY = 15;
+                desplazamientoX = 10;
+                desplazamientoY = 25;
                 break;
             case 6:
                 formacionActual = new int[][] {
@@ -118,8 +135,8 @@ public class Levels {
                     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
                 };
                 pasosPorLado = 24;
-                desplazamientoX = 3;
-                desplazamientoY = 16;
+                desplazamientoX = 10;
+                desplazamientoY = 26;
                 break;
             case 7:
                 formacionActual = new int[][] {
@@ -128,8 +145,8 @@ public class Levels {
                     {2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2}
                 };
                 pasosPorLado = 24;
-                desplazamientoX = 4;
-                desplazamientoY = 17;
+                desplazamientoX = 10;
+                desplazamientoY = 30;
                 break;
             case 8:
                 formacionActual = new int[][] {
@@ -138,8 +155,8 @@ public class Levels {
                     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
                 };
                 pasosPorLado = 26;
-                desplazamientoX = 4;
-                desplazamientoY = 18;
+                desplazamientoX = 10;
+                desplazamientoY = 30;
                 break;
             case 9:
                 formacionActual = new int[][] {
@@ -148,8 +165,8 @@ public class Levels {
                     {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
                 };
                 pasosPorLado = 28;
-                desplazamientoX = 5;
-                desplazamientoY = 19;
+                desplazamientoX = 10;
+                desplazamientoY = 30;
                 break;
             case 10:
                 formacionActual = new int[][] {

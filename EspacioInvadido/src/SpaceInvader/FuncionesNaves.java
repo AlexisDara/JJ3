@@ -18,8 +18,8 @@ public class FuncionesNaves {
     /**
      * Genera una lista de naves enemigas según el nivel.
      */
-    public static List<NaveEnemigas> generarEnemigos(int nivel, double velocidadBase) {
-        List<NaveEnemigas> enemigos = new ArrayList<>();
+    public static List<Object> generarEnemigos(int nivel, double velocidadBase) {
+        List<Object> enemigos = new ArrayList<>();
         Random rand = new Random();
         int cantidad = 5 + nivel * 2;
         for (int i = 0; i < cantidad; i++) {
@@ -27,10 +27,19 @@ public class FuncionesNaves {
             if (nivel >= 5 && rand.nextInt(10) > 7) tipo = 3; // Kamikaze
             else if (nivel >= 2 && rand.nextInt(10) > 5) tipo = 2; // Dispara
             else tipo = 1; // Devil
-            String ruta;
-            if (tipo == 1) ruta = "img/zombi1.png";
-            else ruta = "img/zombi1.png"; // Por ahora solo devil implementado
-            enemigos.add(new NaveEnemigas(rand.nextInt(600), rand.nextInt(100), tipo, ruta, velocidadBase));
+            if (nivel % 10 == 0 && i == 0) {
+                // El jefe aparece como el primer enemigo en niveles múltiplos de 10
+                enemigos.add(new Jefe(250, 50, velocidadBase * 1.5, 20));
+            } else {
+                String ruta;
+                switch (tipo) {
+                    case 1: ruta = "images/zombie.png"; break; // Devil
+                    case 2: ruta = "images/zombie2.png"; break; // Dispara
+                    case 3: ruta = "images/zombie3.png"; break; // Kamikaze
+                    default: ruta = "images/zombie.png"; break;
+                }
+                enemigos.add(new NaveEnemigas(rand.nextInt(600), rand.nextInt(100), tipo, ruta, velocidadBase));
+            }
         }
         return enemigos;
     }
@@ -38,8 +47,8 @@ public class FuncionesNaves {
     /**
      * Genera una lista de naves enemigas según el nivel, adaptada a diferentes tamaños de pantalla.
      */
-    public static List<NaveEnemigas> generarEnemigos(int nivel, double velocidadBase, int screenWidth, int screenHeight) {
-        List<NaveEnemigas> enemigos = new ArrayList<>();
+    public static List<Object> generarEnemigos(int nivel, double velocidadBase, int screenWidth, int screenHeight) {
+        List<Object> enemigos = new ArrayList<>();
         Random rand = new Random();
         int cantidad = 5 + nivel * 2;
         int margenX = (int)(screenWidth * 0.15);
@@ -50,24 +59,22 @@ public class FuncionesNaves {
             if (nivel >= 5 && rand.nextInt(10) > 7) tipo = 3; // Kamikaze
             else if (nivel >= 2 && rand.nextInt(10) > 5) tipo = 2; // Dispara
             else tipo = 1; // Devil
-            String ruta;
-            if (tipo == 1) ruta = "img/zombi1.png";
-            else ruta = "img/zombi1.png"; // Por ahora solo devil implementado
-            int x = margenX + rand.nextInt(Math.max(1, anchoZona));
-            int y = -rand.nextInt(altoZona) - 40; // Aparecen fuera de la pantalla
-            enemigos.add(new NaveEnemigas(x, y, tipo, ruta, velocidadBase));
+            if (nivel % 10 == 0 && i == 0) {
+                enemigos.add(new Jefe(screenWidth/2-70, 50, velocidadBase * 1.5, 20));
+            } else {
+                String ruta;
+                switch (tipo) {
+                    case 1: ruta = "images/zombie.png"; break; // Devil
+                    case 2: ruta = "images/zombie2.png"; break; // Dispara
+                    case 3: ruta = "images/zombie3.png"; break; // Kamikaze
+                    default: ruta = "images/zombie.png"; break;
+                }
+                int x = margenX + rand.nextInt(Math.max(1, anchoZona));
+                int y = -rand.nextInt(altoZona) - 40; // Aparecen fuera de la pantalla
+                enemigos.add(new NaveEnemigas(x, y, tipo, ruta, velocidadBase));
+            }
         }
         return enemigos;
-    }
-
-    /**
-     * Genera un jefe cada 10 niveles.
-     */
-    public static NaveEnemigas generarJefe(int nivel, double velocidadBase) {
-        if (nivel % 10 == 0) {
-            return new NaveEnemigas(250, 50, 4, "img/zombi1.png", velocidadBase*1.5); // Por ahora usa devil
-        }
-        return null;
     }
 
     // Mueve la formación de enemigos
@@ -162,6 +169,10 @@ public class FuncionesNaves {
             p.mover();
             if (p.getY() > Main.SCREEN_HEIGHT - BORDE_Y) proyectilesEnemigos.remove(i--);
         }
+    }
+    public static void frenarProyectiles(List<Proyectil> proyectilesJugador, List<Proyectil> proyectilesEnemigos) {
+        for (Proyectil p : proyectilesJugador) p.frenar();
+        for (Proyectil p : proyectilesEnemigos) p.frenar();
     }
 
     // Colisiones
@@ -287,5 +298,9 @@ public class FuncionesNaves {
                 }
             }
         }
+    }
+    public static void limpiarProyectiles(List<Proyectil> proyectilesJugador, List<Proyectil> proyectilesEnemigos) {
+        proyectilesJugador.clear();
+        proyectilesEnemigos.clear();
     }
 }

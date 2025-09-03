@@ -123,7 +123,7 @@ public class JuegoPanel extends JPanel implements ActionListener, KeyListener {
         }
         for (Proyectil p : proyectilesJugador) p.dibujar(g);
         for (Proyectil p : proyectilesEnemigos) p.dibujar(g);
-        hud.dibujar(g, levels.getVidas());
+        hud.dibujar(g, levels.getVidas(), levels.getNivel());
         if (mostrandoContador) {
             g.setColor(Color.RED);
             g.setFont(new Font("Arial", Font.BOLD, 80));
@@ -136,6 +136,9 @@ public class JuegoPanel extends JPanel implements ActionListener, KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_A) leftPressed = true;
         if (e.getKeyCode() == KeyEvent.VK_D) rightPressed = true;
         if (e.getKeyCode() == KeyEvent.VK_SPACE) spacePressed = true;
+        if (e.getKeyCode() == KeyEvent.VK_P) {
+            siguienteNivel();
+        }
     }
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_A) leftPressed = false;
@@ -154,14 +157,20 @@ public class JuegoPanel extends JPanel implements ActionListener, KeyListener {
     public static int getTitilarTotalFrames() { return TITILAR_TOTAL_FRAMES; }
     public void gameOver() { mainFrame.gameOver(levels.getPuntos()); }
     public void siguienteNivel() {
-        levels.siguienteNivel();
-        formacion = crearFormacionDesdeMatriz(levels.getFormacionActual(), levels);
-        pasosPorLado = levels.getPasosPorLado();
-        desplazamientoX = levels.getDesplazamientoX();
-        desplazamientoY = levels.getDesplazamientoY();
-        movimientosDerecha = 0;
-        movimientosIzquierda = 0;
-        moviendoDerecha = true;
+        // Frenar balas antes de pasar de nivel o mostrar victoria
+        FuncionesNaves.frenarProyectiles(proyectilesJugador, proyectilesEnemigos);
+        if (levels.getNivel() < 10) {
+            levels.siguienteNivel();
+            formacion = crearFormacionDesdeMatriz(levels.getFormacionActual(), levels);
+            pasosPorLado = levels.getPasosPorLado();
+            desplazamientoX = levels.getDesplazamientoX();
+            desplazamientoY = levels.getDesplazamientoY();
+            movimientosDerecha = 0;
+            movimientosIzquierda = 0;
+            moviendoDerecha = true;
+        } else if (levels.getNivel() == 10) {
+            mainFrame.mostrarVictoria(levels.getPuntos());
+        }
     }
     public NaveEnemigas[][] getFormacion() { return formacion; }
     public void setFormacion(NaveEnemigas[][] f) { this.formacion = f; }

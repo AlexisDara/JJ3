@@ -39,7 +39,7 @@ public class AudioPlayer {
             Clip clip = AudioSystem.getClip();
             clip.open(audioStream);
             clip.start();
-            // Liberar recursos cuando termine de reproducir
+
             clip.addLineListener(event -> {
                 if (event.getType() == LineEvent.Type.STOP) {
                     clip.close();

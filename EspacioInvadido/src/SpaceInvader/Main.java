@@ -39,6 +39,7 @@ public class Main extends JFrame {
                 if (e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_SPACE) {
                     iniciarJuego();
                 }
+                
             }
         });
         panelInicio.setFocusable(true);
@@ -50,14 +51,25 @@ public class Main extends JFrame {
         panelJuego = new JuegoPanel(this);
         setContentPane(panelJuego);
         revalidate();
+        panelJuego.setFocusable(true);
         panelJuego.requestFocusInWindow();
     }
 
-    public void gameOver(int puntos) {
+    protected void siguienteNivel() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void gameOver(int puntos) {
         panelGameOver = new PanelGameOver(puntos, this);
         setContentPane(panelGameOver);
         revalidate();
         panelGameOver.requestFocusInWindow();
+    }
+	
+	public void mostrarVictoria(int puntos) {
+        setContentPane(new PanelVictoria(this, puntos));
+        revalidate();
     }
 
     public static void main(String[] args) {

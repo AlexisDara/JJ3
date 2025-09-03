@@ -15,6 +15,10 @@ public class Proyectil {
         g.setColor(color);
         g.drawLine(x, y, x, y + 15 * (dy > 0 ? 1 : -1));
     }
+    public void frenar() {
+        this.dx = 0;
+        this.dy = 0;
+    }
     public int getY() { return y; }
     public int getX() { return x; }
     public int getAncho() { return ancho; }
